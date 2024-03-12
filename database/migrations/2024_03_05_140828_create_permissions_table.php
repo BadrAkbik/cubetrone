@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
+            $table->enum('status', ['grant', 'deny'])->default('deny');
             $table->timestamps();
         });
     }
