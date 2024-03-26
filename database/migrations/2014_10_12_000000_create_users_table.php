@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->enum('gender', ['male', 'female']);
             $table->string('phone_num')->nullable();
-            $table->boolean('is_approved');
+            $table->boolean('is_approved')->default(true);
             $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,13 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'first_name' => ['string', 'min:2'],
+            'last_name' => ['string', 'min:2'],
+            'email' => ['string', 'email', 'max:255', 'unique:users'],
+            'date_of_birth' => ['date'],
+            'gender' => ['in:male,female'],
+            'phone_num' => ['regex:^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$^'],
+            'password' => ['confirmed', Password::defaults()]
         ];
     }
 }

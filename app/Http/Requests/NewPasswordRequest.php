@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\codeValidate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 
-class StoreUserRequest extends FormRequest
+class NewPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,15 +22,11 @@ class StoreUserRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
         return [
-            'first_name' => ['required', 'string', 'min:2'],
-            'last_name' => ['required', 'string', 'min:2'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'date_of_birth' => ['required', 'date'],
-            'gender' => ['required', 'in:male,female'],
-            'phone_num' => ['regex:^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$^'],
+            'email' => ['required', 'email', 'exists:users,email'],
+            'code' => ['required', 'string', new codeValidate($request)],
             'password' => ['required', 'confirmed', Password::defaults()]
         ];
     }
