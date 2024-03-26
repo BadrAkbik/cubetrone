@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->title(),
+            'description' => fake()->text(),
+            'teacher_id' => User::whereRelation('role', 'role', 'student')->pluck('id')->random(),
+            'category_id' => Category::all()->random()->id 
         ];
     }
 }

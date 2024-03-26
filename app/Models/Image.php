@@ -11,6 +11,8 @@ class Image extends Model
 
     protected $table = 'watchables';
 
+    protected $guarded = [];
+
     public function lesson()
     {
         return $this->belongsTo(Lesson::class);

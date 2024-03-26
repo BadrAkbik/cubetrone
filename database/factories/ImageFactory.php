@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Lesson;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
 class ImageFactory extends Factory
 {
@@ -17,7 +18,9 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'type' => fake()->randomElement(['image', 'video']),
+            'path' => fake()->image(),
+            'lesson_id' => Lesson::all()->random()->id
         ];
     }
 }

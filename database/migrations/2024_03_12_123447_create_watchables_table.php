@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('watchables', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['image', 'video']);
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('path');
+            $table->foreignId('lesson_id')->constrained('lessons')->cascadeOnDelete();
             $table->timestamps();
         });
     }

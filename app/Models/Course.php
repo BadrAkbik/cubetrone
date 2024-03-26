@@ -9,6 +9,8 @@ class Course extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function students()
     {
         return $this->belongsToMany(User::class, 'enrollments')->withTimestamps();

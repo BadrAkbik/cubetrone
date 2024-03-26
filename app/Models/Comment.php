@@ -9,6 +9,8 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function lesson()
     {
         return $this->belongsTo(Lesson::class);
