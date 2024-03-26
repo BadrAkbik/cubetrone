@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\Image;
 use App\Models\Lesson;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -30,7 +31,7 @@ class DatabaseSeeder extends Seeder
 
         Category::factory(10)->create();
 
-        $Courses = Course::factory(15)->create();
+        Course::factory(15)->create();
 
         Lesson::factory(40)->create();
 
@@ -39,6 +40,22 @@ class DatabaseSeeder extends Seeder
         $users->each(
             function (User $user){
                 $user->enrollments()->sync([Course::all()->random()->id]);
+            }
+        );
+
+        $permissions = include base_path('data/permissions.php');
+
+        foreach ($permissions as $permission){
+            Permission::create([
+                'name' => $permission
+            ]);
+        }
+
+        $permissions = Permission::all();
+
+        $permissions->each(
+            function (Permission $permission){
+                $permission->roles()->sync([1, 2, 3]);
             }
         );
     }
